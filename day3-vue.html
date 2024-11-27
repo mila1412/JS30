@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <p>
+        Update CSS Variables with <span :style="styleObject">{{text}}</span>
+      </p>
+      <div class="control">
+        <label for="spacing">Spacing: </label>
+        <input v-model="sizeValue" id="spacing" type="range" />
+      </div>
+      <div class="control">
+        <label for="color">Color: </label>
+        <input v-model="colorValue" id="color" type="color" />
+      </div>
+    </div>
+
+    <style>
+      body {
+        background: #193549;
+        color: white;
+        font-family: "helvetica neue", sans-serif;
+        font-size: 50px;
+      }
+      .control {
+        margin-bottom: 50px;
+      }
+      input {
+        width: 100px;
+      }
+    </style>
+
+    <script>
+      const { createApp, ref, watch, computed } = Vue;
+      createApp({
+        setup() {
+          const text = ref("Vue3");
+          const sizeValue = ref(30);
+          const colorValue = ref("#ffffff");
+
+          const computedSize = computed(() => {
+            return `${sizeValue.value}px`;
+          });
+
+          const styleObject = ref({
+            fontSize: computedSize,
+            color: colorValue,
+          });
+
+          return {
+            text,
+            sizeValue,
+            colorValue,
+            styleObject,
+            computedSize,
+          };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>
